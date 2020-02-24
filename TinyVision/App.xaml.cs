@@ -26,6 +26,7 @@ namespace TinyVision
         protected override void ConfigureModuleCatalog(IModuleCatalog moduleCatalog)
         {
             moduleCatalog.AddModule<WorkSpace.WorkSpaceModule>();
+            moduleCatalog.AddModule<Sidebar.SidebarModule>();
         }
     }
 }

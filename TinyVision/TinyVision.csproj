@@ -136,6 +136,10 @@
       <Project>{dcd9c6da-4fbb-4e55-b826-1d16ae611cc6}</Project>
       <Name>AppEvents</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Sidebar\Sidebar.csproj">
+      <Project>{d8a81c50-8b66-4c84-9614-1b730f3f419d}</Project>
+      <Name>Sidebar</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Utils\Utils.csproj">
       <Project>{3540c678-7701-4b09-8ed1-73e3504bad81}</Project>
       <Name>Utils</Name>

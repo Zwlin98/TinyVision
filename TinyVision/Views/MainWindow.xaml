@@ -732,6 +732,7 @@
                             <TextBlock VerticalAlignment="Center">撤销/重做</TextBlock>
                         </StackPanel>
                     </TabItem.Header>
+                    <ContentControl mvvm:RegionManager.RegionName="WorkHistory" ></ContentControl>
                 </TabItem>
                 <!-- 图层 -->
                 <TabItem>

@@ -1,4 +1,4 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
 using System.Windows.Media.Imaging;
 using AppEvents;
 using Microsoft.Win32;
@@ -7,6 +7,7 @@ using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using Utils;
+using WorkSpace.Business;
 using WorkSpace.Utils;
 using WorkSpace.Views;
 using ImageProcessor = Dlls;
@@ -17,6 +18,14 @@ namespace WorkSpace.ViewModels
     {
         //事件聚合器
         private IEventAggregator _eventAggregator;
+
+        private List<IOperation> _operations;
+
+        public List<IOperation> Operations
+        {
+            get { return _operations; }
+            set { SetProperty(ref _operations, value); }
+        }
 
         // 图片路径
         private string _imageFilePath;
@@ -53,6 +62,7 @@ namespace WorkSpace.ViewModels
         public ImageTabViewModel(IEventAggregator eventAggregator)
         {
             _eventAggregator = eventAggregator;
+            Operations = new List<IOperation>();
         }
 
         //导航接口
@@ -81,7 +91,7 @@ namespace WorkSpace.ViewModels
         //打开图片
         private void OpenPicture()
         {
-            ImageMat = ImageProcessor.Open.OpenImage(ImageFilePath);
+            ImageMat =   ImageProcessor.Open.OpenImage(ImageFilePath);
             BitmapImageSource = Converter.MatToBitmapImage(ImageMat);
         }
 
@@ -117,7 +127,6 @@ namespace WorkSpace.ViewModels
         // 图片处理
 
         // 旋转
-
         public void Rotate(string angel)
         {
             if (angel == "90")
@@ -156,7 +165,9 @@ namespace WorkSpace.ViewModels
                 ImageMat = ImageProcessor.Rotate.HoriRot(ImageMat);
             }
 
+            CanSave = true;
             BitmapImageSource = Converter.MatToBitmapImage(ImageMat);
         }
     }
+
 }
