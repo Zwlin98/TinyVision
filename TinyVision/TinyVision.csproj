@@ -34,9 +34,40 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>TinyVision.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CommonServiceLocator, Version=2.0.4.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
+      <HintPath>..\packages\CommonServiceLocator.2.0.4\lib\net46\CommonServiceLocator.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism, Version=7.2.0.1422, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Core.7.2.0.1422\lib\net45\Prism.dll</HintPath>
+    </Reference>
+    <Reference Include="Prism.Unity.Wpf, Version=7.2.0.1422, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59">
+      <HintPath>..\packages\Prism.Unity.7.2.0.1422\lib\net45\Prism.Unity.Wpf.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Prism.Wpf, Version=7.2.0.1422, Culture=neutral, PublicKeyToken=40ee6c3a2184dc59, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.7.2.0.1422\lib\net45\Prism.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.2\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net461\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Prism.Wpf.7.2.0.1422\lib\net45\System.Windows.Interactivity.dll</HintPath>
+    </Reference>
     <Reference Include="System.Xml" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Core" />
@@ -45,6 +76,14 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Xaml">
       <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="Unity.Abstractions, Version=5.11.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0">
+      <HintPath>..\packages\Unity.Abstractions.5.11.1\lib\net46\Unity.Abstractions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Unity.Container, Version=5.11.1.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0">
+      <HintPath>..\packages\Unity.Container.5.11.1\lib\net46\Unity.Container.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="WindowsBase" />
     <Reference Include="PresentationCore" />
@@ -55,15 +94,12 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Page Include="MainWindow.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="MainWindow.xaml.cs">
+    <Compile Include="ViewModels\MainWindowViewModel.cs" />
+    <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
@@ -86,6 +122,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -93,6 +130,96 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\AppEvents\AppEvents.csproj">
+      <Project>{dcd9c6da-4fbb-4e55-b826-1d16ae611cc6}</Project>
+      <Name>AppEvents</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Utils\Utils.csproj">
+      <Project>{3540c678-7701-4b09-8ed1-73e3504bad81}</Project>
+      <Name>Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WorkSpace\WorkSpace.csproj">
+      <Project>{235d1288-4036-4b7b-a425-e3a8b98e283b}</Project>
+      <Name>WorkSpace</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Views\MainWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <SplashScreen Include="Pic\load.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="TinyVision.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icon\Angle.png" />
+    <Resource Include="Icon\Arc.png" />
+    <Resource Include="Icon\Arrow.png" />
+    <Resource Include="Icon\Camera.png" />
+    <Resource Include="Icon\Circle.png" />
+    <Resource Include="Icon\Copy.png" />
+    <Resource Include="Icon\CopyDeep.png" />
+    <Resource Include="Icon\Curve.png" />
+    <Resource Include="Icon\Cut.png" />
+    <Resource Include="Icon\Delete.png" />
+    <Resource Include="Icon\DoubleCircle.png" />
+    <Resource Include="Icon\FolderOpen.png" />
+    <Resource Include="Icon\Grey.png" />
+    <Resource Include="Icon\Grid.png" />
+    <Resource Include="Icon\Hand.png" />
+    <Resource Include="Icon\HDR.png" />
+    <Resource Include="Icon\HelpApplication.png" />
+    <Resource Include="Icon\HideMember.png" />
+    <Resource Include="Icon\Image.png" />
+    <Resource Include="Icon\ImageGenerator.png" />
+    <Resource Include="Icon\ImageMap.png" />
+    <Resource Include="Icon\ImageScale.png" />
+    <Resource Include="Icon\ImageSplice.png" />
+    <Resource Include="Icon\ImageStack.png" />
+    <Resource Include="Icon\MeasureSegment.png" />
+    <Resource Include="Icon\NewWindow.png" />
+    <Resource Include="Icon\OpenPicture.png" />
+    <Resource Include="Icon\Output.png" />
+    <Resource Include="Icon\Oval.png" />
+    <Resource Include="Icon\Parallel.png" />
+    <Resource Include="Icon\Paste.png" />
+    <Resource Include="Icon\Pen2.png" />
+    <Resource Include="Icon\PicDeep.png" />
+    <Resource Include="Icon\Picker.png" />
+    <Resource Include="Icon\Point.png" />
+    <Resource Include="Icon\PrintDocument.png" />
+    <Resource Include="Icon\PrintPreview.png" />
+    <Resource Include="Icon\Property_left.png" />
+    <Resource Include="Icon\Rectangle.png" />
+    <Resource Include="Icon\Refresh.png" />
+    <Resource Include="Icon\Rename.png" />
+    <Resource Include="Icon\Ring.png" />
+    <Resource Include="Icon\Ruler.png" />
+    <Resource Include="Icon\RulerX.png" />
+    <Resource Include="Icon\Save.png" />
+    <Resource Include="Icon\SaveAll.png" />
+    <Resource Include="Icon\SaveAs.png" />
+    <Resource Include="Icon\Segment.png" />
+    <Resource Include="Icon\SegmentPoint.png" />
+    <Resource Include="Icon\Select.png" />
+    <Resource Include="Icon\SettingsPanel.png" />
+    <Resource Include="Icon\Star.png" />
+    <Resource Include="Icon\Start.png" />
+    <Resource Include="Icon\Stop.png" />
+    <Resource Include="Icon\Text.png" />
+    <Resource Include="Icon\TimePickerScroll.png" />
+    <Resource Include="Icon\Timer.png" />
+    <Resource Include="Icon\Vertical.png" />
+    <Resource Include="Icon\VideoCamera.png" />
+    <Resource Include="Icon\WindowsService.png" />
+    <Resource Include="Icon\Word.png" />
+    <Resource Include="Icon\ZoomToFit.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

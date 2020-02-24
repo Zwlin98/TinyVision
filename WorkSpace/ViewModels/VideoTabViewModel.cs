@@ -1,6 +1,8 @@
-﻿namespace WorkSpace.ViewModels
+﻿using Prism.Mvvm;
+
+namespace WorkSpace.ViewModels
 {
-    public class VideoTabViewModel
+    public class VideoTabViewModel:BindableBase
     {
         
     }

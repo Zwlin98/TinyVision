@@ -1,8 +1,13 @@
-﻿using System;
+﻿using Prism.Events;
 
 namespace AppEvents
 {
-    public class Class1
+    public class SaveImage:PubSubEvent
     {
+    }
+
+    public class CanSaveImage : PubSubEvent
+    {
+
     }
 }
