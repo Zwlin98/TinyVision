@@ -29,6 +29,7 @@ namespace WorkSpace.ViewModels
         private void TabChanged()
         {
             _eventAggregator.GetEvent<CanSaveImage>().Publish();
+            _eventAggregator.GetEvent<CanEditImage>().Publish();
         }
     }
 }

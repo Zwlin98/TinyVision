@@ -8,22 +8,25 @@ using Prism.Mvvm;
 using Prism.Regions;
 using Utils;
 using WorkSpace.Utils;
+using WorkSpace.Views;
 using ImageProcessor = Dlls;
 
 namespace WorkSpace.ViewModels
 {
-    public class ImageTabViewModel:BindableBase,INavigationAware
+    public class ImageTabViewModel : BindableBase, INavigationAware
     {
         //事件聚合器
         private IEventAggregator _eventAggregator;
+
         // 图片路径
         private string _imageFilePath;
-        
+
         public string ImageFilePath
         {
             get { return _imageFilePath; }
             set { SetProperty(ref _imageFilePath, value); }
         }
+
         // 图片名
         private string _filename;
 
@@ -85,7 +88,7 @@ namespace WorkSpace.ViewModels
         // 保存图片
         public void SaveImage()
         {
-            ImageProcessor.Open.SaveImage(ImageFilePath,ImageMat);
+            ImageProcessor.Open.SaveImage(ImageFilePath, ImageMat);
         }
 
         private bool _canSave = false;
@@ -108,6 +111,52 @@ namespace WorkSpace.ViewModels
             {
                 // TODO:完成另存为
             }
+        }
+
+
+        // 图片处理
+
+        // 旋转
+
+        public void Rotate(string angel)
+        {
+            if (angel == "90")
+            {
+                ImageMat = ImageProcessor.Rotate.Rot90(ImageMat);
+            }
+
+            if (angel == "180")
+            {
+                ImageMat = ImageProcessor.Rotate.Rot180(ImageMat);
+            }
+
+            if (angel == "270")
+            {
+                ImageMat = ImageProcessor.Rotate.Rot270(ImageMat);
+            }
+
+            if (angel == "Any")
+            {
+                var rotateDialog = new RotateWindow();
+                if (rotateDialog.ShowDialog() == true)
+                {
+                    var clockWise = rotateDialog.ClockWise;
+                    var angelValue = rotateDialog.AngelValue;
+                    ImageMat = ImageProcessor.Rotate.ImgRotate(ImageMat, angelValue, !clockWise);
+                }
+            }
+
+            if (angel == "Vertical")
+            {
+                ImageMat = ImageProcessor.Rotate.VertRot(ImageMat);
+            }
+
+            if (angel == "Horizontal")
+            {
+                ImageMat = ImageProcessor.Rotate.HoriRot(ImageMat);
+            }
+
+            BitmapImageSource = Converter.MatToBitmapImage(ImageMat);
         }
     }
 }

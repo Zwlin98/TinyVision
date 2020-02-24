@@ -109,6 +109,9 @@
     <Compile Include="Views\ImageTab.xaml.cs">
       <DependentUpon>ImageTab.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\RotateWindow.xaml.cs">
+      <DependentUpon>RotateWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\VideoTab.xaml.cs">
       <DependentUpon>VideoTab.xaml</DependentUpon>
     </Compile>
@@ -129,6 +132,10 @@
   <ItemGroup />
   <ItemGroup>
     <Page Include="Views\ImageTab.xaml" />
+    <Page Include="Views\RotateWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\VideoTab.xaml" />
     <Page Include="Views\WorkSpace.xaml" />
   </ItemGroup>

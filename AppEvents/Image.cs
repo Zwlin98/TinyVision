@@ -10,4 +10,9 @@ namespace AppEvents
     {
 
     }
+
+    public class CanEditImage : PubSubEvent
+    {
+
+    }
 }

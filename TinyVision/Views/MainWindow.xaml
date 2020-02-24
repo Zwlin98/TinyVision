@@ -80,7 +80,7 @@
                 <Separator />
                 <MenuItem Header="最近文件(_R)" />
                 <Separator />
-                <MenuItem Header="退出(_X)" Command="{Binding Close}" CommandParameter="{Binding ElementName=Mw}" />
+                <MenuItem Header="退出(_X)" Command="{Binding CloseByMenu}" CommandParameter="{Binding ElementName=Mw}" />
             </MenuItem>
             <MenuItem Header="编辑(_E)">
                 <MenuItem Command="ApplicationCommands.Cut" Header="剪切(_T)">
@@ -278,16 +278,16 @@
                 </MenuItem>
                 <Separator />
                 <MenuItem Header="旋转(_T)">
-                    <MenuItem Header="90度(顺时针)" />
-                    <MenuItem Header="180度(顺时针)" />
-                    <MenuItem Header="270度(顺时针)" />
-                    <MenuItem Header="任意角度(_A)..." />
+                    <MenuItem Header="90度(顺时针)" Command="{Binding Rotate}" CommandParameter="90"/>
+                    <MenuItem Header="180度(顺时针)" Command="{Binding Rotate}" CommandParameter="180" />
+                    <MenuItem Header="270度(顺时针)" Command="{Binding Rotate}" CommandParameter="270" />
+                    <MenuItem Header="任意角度(_A)..." Command="{Binding Rotate}" CommandParameter="Any" />
                     <Separator />
-                    <MenuItem Header="水平翻转(_H)" />
-                    <MenuItem Header="垂直翻转(_V)" />
+                    <MenuItem Header="水平翻转(_H)" Command="{Binding Rotate}" CommandParameter="Horizontal"/>
+                    <MenuItem Header="垂直翻转(_V)" Command="{Binding Rotate}" CommandParameter="Vertical"/>
                 </MenuItem>
                 <Separator />
-                <MenuItem Header="裁剪(_C)" InputGestureText="Shift+C">
+                <MenuItem Header="裁剪(_C)" InputGestureText="Shift+C"  >
                     <MenuItem.Icon>
                         <Image Source="../Icon/ImageScale.png" />
                     </MenuItem.Icon>
@@ -761,7 +761,7 @@
         <StatusBar Grid.Row="3">TinyVision</StatusBar>
     </Grid>
     <i:Interaction.Triggers>
-        <i:EventTrigger EventName="Closed">
+        <i:EventTrigger EventName="Closing">
             <i:InvokeCommandAction Command="{Binding Close}" CommandParameter="{Binding ElementName=Mw}"/>
         </i:EventTrigger>
     </i:Interaction.Triggers>

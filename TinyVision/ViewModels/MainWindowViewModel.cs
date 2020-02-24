@@ -18,10 +18,10 @@ namespace TinyVision.ViewModels
 {
     public class MainWindowViewModel : BindableBase
     {
-        private string _title;
         private IRegionManager _regionManager;
         private IEventAggregator _eventAggregator;
 
+        private string _title;
         public string Title
         {
             get { return _title; }
@@ -33,17 +33,52 @@ namespace TinyVision.ViewModels
             Title = "TinyVision";
             _regionManager = regionManager;
             _eventAggregator = eventAggregator;
+            // 菜单命令初始化
+            // 文件部分
             OpenPicture = new DelegateCommand(OpenPictureExecute);
             OpenVideo = new DelegateCommand(OpenVideoExecute);
             Save = new DelegateCommand(SaveExecute,CanSave);
-            SaveAs = new DelegateCommand(SaveAsExecute,CanSaveAs);
-            Close = new DelegateCommand<MainWindow>(CloseExecute);
+            SaveAs = new DelegateCommand(SaveAsExecute).ObservesCanExecute(()=>CanEdit);
+            CloseByMenu = new DelegateCommand<MainWindow>(CloseByMenuExecute);
+            // 图像部分
+            Rotate = new DelegateCommand<string>(RotateExecute).ObservesCanExecute(() => CanEdit);
 
+            // 事件监听
             _eventAggregator.GetEvent<CanSaveImage>().Subscribe(RaiseCanSaveChanged);
+            _eventAggregator.GetEvent<CanEditImage>().Subscribe(RaiseCanEditChanged);
         }
 
+        // 获得当前工作区图片的ViewModel
+        private ImageTabViewModel GetCurrentTabViewModel()
+        {
+            var first = _regionManager.Regions["ImageTabs"].ActiveViews.First() as ImageTab;
+            return first?.DataContext as ImageTabViewModel;
+        }
+
+        private bool _canEdit=false;
+
+        public bool CanEdit
+        {
+            get { return _canEdit; }
+            set { SetProperty(ref _canEdit,value); }
+        }
+
+        private void RaiseCanEditChanged()
+        {
+            if (_regionManager.Regions["ImageTabs"].ActiveViews.Any())
+            {
+                CanEdit = true;
+            }
+            else
+            {
+                CanEdit = false;
+            }
+        }
         // 菜单栏的命令
 
+        //确认可以修改
+
+        // 文件部分
         // 打开图像
         public DelegateCommand OpenPicture { get; private set; }
 
@@ -62,6 +97,7 @@ namespace TinyVision.ViewModels
                 
                 _regionManager.RequestNavigate("ImageTabs","ImageTab",parameters);
 
+                CanEdit = true;
             }
         }
         //打开视频
@@ -92,9 +128,7 @@ namespace TinyVision.ViewModels
 
         private void SaveExecute()
         {
-            var first = _regionManager.Regions["ImageTabs"].ActiveViews.First() as ImageTab;
-            var viewModels = first?.DataContext as ImageTabViewModel;
-            viewModels.SaveImage();
+            GetCurrentTabViewModel()?.SaveImage();
         }
 
         private bool CanSave()
@@ -117,7 +151,6 @@ namespace TinyVision.ViewModels
         private void RaiseCanSaveChanged()
         {
             Save.RaiseCanExecuteChanged();
-            SaveAs.RaiseCanExecuteChanged();
         }
 
         //另存为
@@ -125,65 +158,26 @@ namespace TinyVision.ViewModels
 
         private void SaveAsExecute()
         {
-            var first = _regionManager.Regions["ImageTabs"].ActiveViews.First() as ImageTab;
-            var viewModels = first?.DataContext as ImageTabViewModel;
-            viewModels.SaveImageAs();
+            GetCurrentTabViewModel().SaveImageAs();
         }
 
-        private bool CanSaveAs()
-        {
-            try
-            {
-                var views = _regionManager.Regions["ImageTabs"].ActiveViews;
-                if (views.Any())
-                {
-                    return true;
-                }
-            }
-            catch (Exception e)
-            {
-                return false;
-            }
+        // 退出
+        public DelegateCommand<MainWindow> CloseByMenu { get; private set; }
 
-            return false;
+        private void CloseByMenuExecute(MainWindow mainWindow)
+        {
+            mainWindow.Close();
         }
 
-        // 关闭
-        public DelegateCommand<MainWindow> Close { get; set; }
 
-        private void CloseExecute(MainWindow mainWindow)
+        //图像部分
+
+        // 旋转
+        public DelegateCommand<string> Rotate { get; private set; }
+
+        private void RotateExecute(string angel)
         {
-            try
-            {
-                var views = _regionManager.Regions["ImageTabs"].ActiveViews;
-                if (views.Any())
-                {
-                    foreach (ImageTab view  in views)
-                    {
-                        var viewModel = view.DataContext as ImageTabViewModel;
-                        if (viewModel.CanSave)
-                        {
-                            if (MessageBox.Show("有未保存的文件，是否要关闭？", "确认", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
-                            {
-                                mainWindow.Close();
-                            }
-                            else
-                            {
-                                return;
-                            }
-                        }
-                    }
-                }
-                else
-                {
-                    mainWindow.Close();
-                }
-            }
-            catch (Exception e)
-            {
-                mainWindow?.Close();
-            }
-            
+            GetCurrentTabViewModel().Rotate(angel);
         }
     }
 

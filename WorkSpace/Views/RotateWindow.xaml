@@ -1,0 +1,17 @@
+﻿<Window x:Class="WorkSpace.Views.RotateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WorkSpace.Views"
+        mc:Ignorable="d"
+        Title="任意旋转" Width="200" Height="160" FontSize="14">
+<StackPanel VerticalAlignment="Center">
+        <CheckBox x:Name="IsClockWise" Content="顺时针" Margin="0 10" HorizontalAlignment="Center"/>
+        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10">
+            <Label>旋转角度:</Label>
+            <TextBox x:Name="Angel" Width="100"></TextBox>
+        </StackPanel>
+        <Button x:Name="Confirm" Click="Confirm_OnClick" HorizontalAlignment="Center" Width="50" Margin="0 10">确认</Button>
+    </StackPanel>
+</Window>

@@ -12,6 +12,9 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using Prism.Regions;
+using WorkSpace.ViewModels;
+using WorkSpace.Views;
 
 namespace TinyVision.Views
 {
@@ -20,9 +23,39 @@ namespace TinyVision.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
+        private IRegionManager _regionManager;
+
+        public MainWindow(IRegionManager regionManager)
         {
             InitializeComponent();
+            _regionManager = regionManager;
+            this.Closing += MainWindow_Closing;
+        }
+
+        private void MainWindow_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            try
+            {
+                var views = _regionManager.Regions["ImageTabs"].ActiveViews;
+                if (views.Any())
+                {
+                    foreach (ImageTab view in views)
+                    {
+                        var viewModel = view.DataContext as ImageTabViewModel;
+                        if (viewModel.CanSave)
+                        {
+                            if (MessageBox.Show("有未保存的文件，是否要关闭？", "确认", MessageBoxButton.YesNo) == MessageBoxResult.No)
+                            {
+                                e.Cancel = true;
+                            }
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                return;
+            }
         }
     }
 }
