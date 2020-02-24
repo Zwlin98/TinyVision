@@ -5,8 +5,10 @@ using AppEvents;
 using Microsoft.Win32;
 using Prism.Commands;
 using Prism.Events;
+using Prism.Ioc;
 using Prism.Mvvm;
 using Prism.Regions;
+using TinyVision.Views;
 using Utils;
 using WorkSpace.ViewModels;
 using WorkSpace.Views;
@@ -34,6 +36,8 @@ namespace TinyVision.ViewModels
             OpenPicture = new DelegateCommand(OpenPictureExecute);
             OpenVideo = new DelegateCommand(OpenVideoExecute);
             Save = new DelegateCommand(SaveExecute,CanSave);
+            SaveAs = new DelegateCommand(SaveAsExecute,CanSaveAs);
+            Close = new DelegateCommand<MainWindow>(CloseExecute);
 
             _eventAggregator.GetEvent<CanSaveImage>().Subscribe(RaiseCanSaveChanged);
         }
@@ -86,13 +90,11 @@ namespace TinyVision.ViewModels
 
         public DelegateCommand Save { get; private set; }
 
-
         private void SaveExecute()
         {
-            // _eventAggregator.GetEvent<SaveImage>().Publish();
             var first = _regionManager.Regions["ImageTabs"].ActiveViews.First() as ImageTab;
-            MessageBox.Show((first.DataContext as ImageTabViewModel).FileName);
-            
+            var viewModels = first?.DataContext as ImageTabViewModel;
+            viewModels.SaveImage();
         }
 
         private bool CanSave()
@@ -110,13 +112,80 @@ namespace TinyVision.ViewModels
             {
                 return false;
             }
-
         }
 
         private void RaiseCanSaveChanged()
         {
             Save.RaiseCanExecuteChanged();
+            SaveAs.RaiseCanExecuteChanged();
+        }
+
+        //另存为
+        public DelegateCommand SaveAs { get; private set; }
+
+        private void SaveAsExecute()
+        {
+            var first = _regionManager.Regions["ImageTabs"].ActiveViews.First() as ImageTab;
+            var viewModels = first?.DataContext as ImageTabViewModel;
+            viewModels.SaveImageAs();
+        }
+
+        private bool CanSaveAs()
+        {
+            try
+            {
+                var views = _regionManager.Regions["ImageTabs"].ActiveViews;
+                if (views.Any())
+                {
+                    return true;
+                }
+            }
+            catch (Exception e)
+            {
+                return false;
+            }
+
+            return false;
+        }
+
+        // 关闭
+        public DelegateCommand<MainWindow> Close { get; set; }
+
+        private void CloseExecute(MainWindow mainWindow)
+        {
+            try
+            {
+                var views = _regionManager.Regions["ImageTabs"].ActiveViews;
+                if (views.Any())
+                {
+                    foreach (ImageTab view  in views)
+                    {
+                        var viewModel = view.DataContext as ImageTabViewModel;
+                        if (viewModel.CanSave)
+                        {
+                            if (MessageBox.Show("有未保存的文件，是否要关闭？", "确认", MessageBoxButton.YesNo) == MessageBoxResult.Yes)
+                            {
+                                mainWindow.Close();
+                            }
+                            else
+                            {
+                                return;
+                            }
+                        }
+                    }
+                }
+                else
+                {
+                    mainWindow.Close();
+                }
+            }
+            catch (Exception e)
+            {
+                mainWindow?.Close();
+            }
+            
         }
     }
+
 
 }
