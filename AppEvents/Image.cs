@@ -1,4 +1,5 @@
 ﻿using Prism.Events;
+using Utils;
 
 namespace AppEvents
 {
@@ -12,6 +13,21 @@ namespace AppEvents
     }
 
     public class CanEditImage : PubSubEvent
+    {
+
+    }
+
+    public class TabChanged : PubSubEvent
+    {
+
+    }
+
+    public class AddOperation : PubSubEvent<Operation>
+    {
+
+    }
+
+    public class OperationChanged : PubSubEvent<Operation>
     {
 
     }

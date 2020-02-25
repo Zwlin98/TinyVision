@@ -1,6 +1,7 @@
 ﻿using Prism.Ioc;
 using Prism.Modularity;
 using Prism.Regions;
+using Sidebar.Views;
 
 namespace Sidebar
 {
@@ -14,8 +15,7 @@ namespace Sidebar
         public void OnInitialized(IContainerProvider containerProvider)
         {
             var regionManager = containerProvider.Resolve<IRegionManager>();
-
-            regionManager.RegisterViewWithRegion("WorkHistory", typeof(Views.WorkHistory));
+            regionManager.RegisterViewWithRegion("WorkHistory", typeof(WorkHistory));
         }
     }
 }

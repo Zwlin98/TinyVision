@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+using System.Linq;
 using System.Windows.Media.Imaging;
 using AppEvents;
 using Microsoft.Win32;
@@ -7,7 +9,6 @@ using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using Utils;
-using WorkSpace.Business;
 using WorkSpace.Utils;
 using WorkSpace.Views;
 using ImageProcessor = Dlls;
@@ -18,15 +19,9 @@ namespace WorkSpace.ViewModels
     {
         //事件聚合器
         private IEventAggregator _eventAggregator;
-
-        private List<IOperation> _operations;
-
-        public List<IOperation> Operations
-        {
-            get { return _operations; }
-            set { SetProperty(ref _operations, value); }
-        }
-
+        private IRegionManager _regionManager;
+        private static int _id=1;
+        public int Id { get; private set; }
         // 图片路径
         private string _imageFilePath;
 
@@ -59,11 +54,13 @@ namespace WorkSpace.ViewModels
         }
 
         // 构造函数
-        public ImageTabViewModel(IEventAggregator eventAggregator)
+        public ImageTabViewModel(IEventAggregator eventAggregator,IRegionManager regionManager)
         {
             _eventAggregator = eventAggregator;
-            Operations = new List<IOperation>();
+            _regionManager = regionManager;
+            Id = _id++;
         }
+
 
         //导航接口
         public void OnNavigatedTo(NavigationContext navigationContext)
@@ -86,13 +83,24 @@ namespace WorkSpace.ViewModels
         {
 
         }
+        //显示图片矩阵
+        private void ShowMatInTab()
+        {
+            BitmapImageSource = Converter.MatToBitmapImage(ImageMat);
+        }
 
+        //添加操作记录
+        private void AddOperationToHistory(Operation op)
+        {
+            _eventAggregator.GetEvent<AddOperation>().Publish(op);
+        }
 
         //打开图片
         private void OpenPicture()
         {
             ImageMat =   ImageProcessor.Open.OpenImage(ImageFilePath);
-            BitmapImageSource = Converter.MatToBitmapImage(ImageMat);
+            ShowMatInTab();
+            AddOperationToHistory(new Operation($"打开 {FileName}",ImageMat));
         }
 
         // 保存图片
@@ -102,6 +110,7 @@ namespace WorkSpace.ViewModels
         }
 
         private bool _canSave = false;
+        
 
         public bool CanSave
         {
@@ -123,7 +132,6 @@ namespace WorkSpace.ViewModels
             }
         }
 
-
         // 图片处理
 
         // 旋转
@@ -132,16 +140,20 @@ namespace WorkSpace.ViewModels
             if (angel == "90")
             {
                 ImageMat = ImageProcessor.Rotate.Rot90(ImageMat);
+                AddOperationToHistory(new Operation($"顺时针旋转 90°", ImageMat));
             }
 
             if (angel == "180")
             {
                 ImageMat = ImageProcessor.Rotate.Rot180(ImageMat);
+                AddOperationToHistory(new Operation($"顺时针旋转 180°", ImageMat));
             }
 
             if (angel == "270")
             {
                 ImageMat = ImageProcessor.Rotate.Rot270(ImageMat);
+                AddOperationToHistory(new Operation($"顺时针旋转 270°", ImageMat));
+
             }
 
             if (angel == "Any")
@@ -152,21 +164,32 @@ namespace WorkSpace.ViewModels
                     var clockWise = rotateDialog.ClockWise;
                     var angelValue = rotateDialog.AngelValue;
                     ImageMat = ImageProcessor.Rotate.ImgRotate(ImageMat, angelValue, !clockWise);
+                    if (clockWise)
+                    {
+                        AddOperationToHistory(new Operation($"顺时针旋转 {angelValue}°", ImageMat));
+                    }
+                    else
+                    {
+                        AddOperationToHistory(new Operation($"逆时针旋转 {angelValue}°", ImageMat));
+                    }
+
                 }
             }
 
             if (angel == "Vertical")
             {
                 ImageMat = ImageProcessor.Rotate.VertRot(ImageMat);
+                AddOperationToHistory(new Operation($"垂直翻转", ImageMat));
             }
 
             if (angel == "Horizontal")
             {
                 ImageMat = ImageProcessor.Rotate.HoriRot(ImageMat);
+                AddOperationToHistory(new Operation($"水平翻转", ImageMat));
             }
 
             CanSave = true;
-            BitmapImageSource = Converter.MatToBitmapImage(ImageMat);
+            ShowMatInTab();
         }
     }
 

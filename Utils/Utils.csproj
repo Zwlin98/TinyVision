@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="OpenCvSharp4.Windows" Version="4.2.0.20200208" />
+    <PackageReference Include="Prism.Core" Version="7.2.0.1422" />
   </ItemGroup>
 
 </Project>

@@ -5,11 +5,49 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Sidebar.Views"
              xmlns:mvvm="http://prismlibrary.com/"
+             xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
              mc:Ignorable="d" 
              mvvm:ViewModelLocator.AutoWireViewModel="True">
     <Grid>
-            <DataGrid>
-
-            </DataGrid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <ToolBar Grid.Row="0" Background="#FFF0F0F0" IsOverflowOpen="False">
+            <Button ToolTip="后退">
+                <Image Source="../Icon/Back.png"></Image>
+            </Button>
+            <Button ToolTip="前进">
+                <Image Source="../Icon/Forward.png"></Image>
+            </Button>
+            <Separator/>
+            <Button ToolTip="复制">
+                <Image Source="../Icon/Copy.png"></Image>
+            </Button>
+            <Button ToolTip="删除操作" Command="{Binding Delete}">
+                <Image Source="../Icon/Delete.png"></Image>
+            </Button>
+        </ToolBar>
+        <ListView x:Name="_listOfOperation" Grid.Row="1" ItemsSource="{Binding Operations}">
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="SelectionChanged">
+                    <mvvm:InvokeCommandAction Command="{Binding OperationSelected}" CommandParameter="{Binding SelectedItem, ElementName=_listOfOperation}" />
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="序号" DisplayMemberBinding="{Binding CurrentId}" Width="60"/>
+                    <GridViewColumn Header="当前" Width="60">
+                        <GridViewColumn.CellTemplate>
+                            <DataTemplate>
+                                <CheckBox IsChecked="{Binding IsCurrent}"></CheckBox>
+                            </DataTemplate>
+                        </GridViewColumn.CellTemplate>
+                    </GridViewColumn>
+                    <GridViewColumn Header="操作" DisplayMemberBinding="{Binding Description}" Width="150">
+                    </GridViewColumn>
+                </GridView>
+            </ListView.View>
+        </ListView>
     </Grid>
 </UserControl>

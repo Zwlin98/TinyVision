@@ -1,8 +1,11 @@
-﻿using System.Windows;
+﻿using System.Linq;
+using System.Windows;
 using AppEvents;
 using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
+using Prism.Regions;
+using WorkSpace.Views;
 
 namespace WorkSpace.ViewModels
 {
@@ -10,6 +13,8 @@ namespace WorkSpace.ViewModels
     {
         private string _button;
         private IEventAggregator _eventAggregator;
+        private IRegionManager _regionManager;
+
 
         public string Button
         {
@@ -17,12 +22,14 @@ namespace WorkSpace.ViewModels
             set { SetProperty(ref _button, value); }
         }
 
-        public WorkSpaceViewModel(IEventAggregator eventAggregator)
+        public WorkSpaceViewModel(IEventAggregator eventAggregator, IRegionManager regionManager)
         {
             Button = "TEST";
             _eventAggregator = eventAggregator;
+            _regionManager = regionManager;
             TabChangedCommand = new DelegateCommand(TabChanged);
         }
+
 
         public DelegateCommand TabChangedCommand { get; private set; }
         
@@ -30,6 +37,7 @@ namespace WorkSpace.ViewModels
         {
             _eventAggregator.GetEvent<CanSaveImage>().Publish();
             _eventAggregator.GetEvent<CanEditImage>().Publish();
+            _eventAggregator.GetEvent<TabChanged>().Publish();
         }
     }
 }
