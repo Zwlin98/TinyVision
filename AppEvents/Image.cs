@@ -29,6 +29,6 @@ namespace AppEvents
 
     public class OperationChanged : PubSubEvent<Operation>
     {
-
+    
     }
 }

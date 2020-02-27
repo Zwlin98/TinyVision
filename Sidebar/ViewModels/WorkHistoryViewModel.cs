@@ -35,16 +35,22 @@ namespace Sidebar.ViewModels
 
         public WorkHistoryViewModel(IEventAggregator eventAggregator,IRegionManager regionManager)
         {
+            // 变量初始化
             _eventAggregator = eventAggregator;
             _regionManager = regionManager;
-            OperationSelected = new DelegateCommand<Operation>(OperationSelectedExecute);
-            Delete = new DelegateCommand(DeleteExecute);
-
-            _eventAggregator.GetEvent<TabChanged>().Subscribe(TabChanged);
+            OperationHistories = new Dictionary<int, ObservableCollection<Operation>>();
             Operations = new ObservableCollection<Operation>();
 
 
-            OperationHistories = new Dictionary<int, ObservableCollection<Operation>>();
+            // 命令初始化
+            Back = new DelegateCommand(BackExecute);
+            Forward = new DelegateCommand(ForwardExecute);
+            Copy = new DelegateCommand(CopyExecute);
+            Delete = new DelegateCommand(DeleteExecute);
+            OperationSelected = new DelegateCommand<Operation>(OperationSelectedExecute);
+
+            // 事件订阅
+            _eventAggregator.GetEvent<TabChanged>().Subscribe(TabChanged);
             _eventAggregator.GetEvent<AddOperation>().Subscribe(AddOperationTo);
             
         }
@@ -112,7 +118,36 @@ namespace Sidebar.ViewModels
 
         }
 
+        private void ChangeOperation()
+        {
 
+        }
+
+
+        // 后退
+        public DelegateCommand Back { get; set; }
+
+        private void BackExecute()
+        {
+
+        }
+
+        // 前进
+        public DelegateCommand Forward { get; set; }
+
+
+        private void ForwardExecute()
+        {
+
+        }
+        // 复制
+        public DelegateCommand Copy { get; set; }
+
+        private void CopyExecute()
+        {
+
+        }
+        // 删除
         public DelegateCommand Delete { get; set; }
 
         private void DeleteExecute()

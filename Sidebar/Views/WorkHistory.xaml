@@ -14,14 +14,14 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <ToolBar Grid.Row="0" Background="#FFF0F0F0" IsOverflowOpen="False">
-            <Button ToolTip="后退">
+            <Button ToolTip="后退" Command="{Binding Back}">
                 <Image Source="../Icon/Back.png"></Image>
             </Button>
-            <Button ToolTip="前进">
+            <Button ToolTip="前进" Command="{Binding Forward}">
                 <Image Source="../Icon/Forward.png"></Image>
             </Button>
             <Separator/>
-            <Button ToolTip="复制">
+            <Button ToolTip="复制" Command="{Binding Copy}">
                 <Image Source="../Icon/Copy.png"></Image>
             </Button>
             <Button ToolTip="删除操作" Command="{Binding Delete}">
