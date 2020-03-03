@@ -1,4 +1,5 @@
-﻿using Prism.Events;
+﻿using OpenCvSharp;
+using Prism.Events;
 using Utils;
 
 namespace AppEvents
@@ -30,5 +31,10 @@ namespace AppEvents
     public class OperationChanged : PubSubEvent<Operation>
     {
     
+    }
+
+    public class PreviewImageChange : PubSubEvent<Mat>
+    {
+
     }
 }

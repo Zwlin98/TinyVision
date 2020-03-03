@@ -1,0 +1,52 @@
+﻿<Window x:Class="WorkSpace.Views.ChangeBright"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WorkSpace.Views"
+        xmlns:mvvm="http://prismlibrary.com/"
+        xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
+        mc:Ignorable="d"
+        mvvm:ViewModelLocator.AutoWireViewModel="True"
+        Title="改变亮度和对比度" Height="180" Width="400" FontSize="16">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="80"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <StackPanel Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" Orientation="Horizontal">
+            <Label>亮度</Label>
+            <Label Content ="{Binding BrightValue}"></Label>
+        </StackPanel>
+        <Slider Grid.Column="0" Grid.Row="1" VerticalAlignment="Center" Value="{Binding BrightValue}" Minimum="-150" Maximum="150"
+                TickPlacement="BottomRight" TickFrequency="10"
+                >
+            <i:Interaction.Triggers>
+                <i:EventTrigger EventName="MouseLeftButtonUp">
+                    <i:InvokeCommandAction Command="{Binding BrightValueChanged}"/>
+                </i:EventTrigger>
+            </i:Interaction.Triggers>
+        </Slider>
+        <StackPanel Grid.Column="0" Grid.Row="2" VerticalAlignment="Center" Orientation="Horizontal">
+            <Label>对比度</Label>
+            <Label Content ="{Binding ConValue}"></Label>
+        </StackPanel>
+        <Slider Grid.Column="0" Grid.Row="3" VerticalAlignment="Center" Value="{Binding ConValue}" Minimum="0" Maximum="300"
+                TickPlacement="BottomRight" TickFrequency="10" Thumb.DragCompleted ="{Binding ConValueChanged}">
+            <!-- <i:Interaction.Triggers> -->
+            <!--     <i:EventTrigger EventName="MouseLeftButtonUp"> -->
+            <!--         <i:InvokeCommandAction Command="{Binding ConValueChanged}"/> -->
+            <!--     </i:EventTrigger> -->
+            <!-- </i:Interaction.Triggers> -->
+        </Slider>
+        <Button Grid.Column="1" Grid.Row="0" Margin="5" Command="{Binding Confirm}">确定</Button>
+        <Button Grid.Column="1" Grid.Row="1" Margin="5" Command="{Binding Cancel}">取消</Button>
+
+    </Grid>
+</Window>

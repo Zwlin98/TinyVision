@@ -59,6 +59,8 @@ namespace WorkSpace.ViewModels
             _eventAggregator = eventAggregator;
             _regionManager = regionManager;
             Id = _id++;
+
+            _eventAggregator.GetEvent<PreviewImageChange>().Subscribe(PreviewImage);
         }
 
 
@@ -83,10 +85,23 @@ namespace WorkSpace.ViewModels
         {
 
         }
+
         //显示图片矩阵
         private void ShowMatInTab()
         {
             BitmapImageSource = Converter.MatToBitmapImage(ImageMat);
+        }
+
+        // 预览图片
+        private void PreviewImage(Mat picMat)
+        {
+            BitmapImageSource = Converter.MatToBitmapImage(picMat);
+        }
+
+        // 取消预览
+        private void CancelPreviewImage(Mat picMat)
+        {
+            ShowMatInTab();
         }
 
         //添加操作记录
@@ -133,6 +148,23 @@ namespace WorkSpace.ViewModels
         }
 
         // 图片处理
+        // 灰度化
+        public void ToGray()
+        {
+            ImageMat = ImageProcessor.Mood.ToGrey(ImageMat);
+            AddOperationToHistory(new Operation("灰度化",ImageMat));
+            ShowMatInTab();
+        }
+
+        // 亮度对比度
+
+        public void ChangeBriAndCon()
+        {
+            var dialog = new ChangeBright();
+            var vm = dialog.DataContext as ChangeBrightViewModel;
+            vm.ImageMat = ImageMat;
+            dialog.ShowDialog();
+        }
 
         // 旋转
         public void Rotate(string angel)

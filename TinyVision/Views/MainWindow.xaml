@@ -251,7 +251,7 @@
             <MenuItem Header="图像(_I)">
                 <MenuItem Header="模式(_M)">
                     <MenuItem Header="颜色位数(_Q)..." />
-                    <MenuItem Header="灰度化(_G)" />
+                    <MenuItem Header="灰度化(_G)" Command="{Binding ToGray}"/>
                     <Separator />
                     <MenuItem Header="对比度保留去色(_C)" />
                 </MenuItem>
@@ -260,7 +260,7 @@
                     <MenuItem.Icon>
                         <Image Source="../Icon/ImageMap.png" />
                     </MenuItem.Icon>
-                    <MenuItem Header="亮度对比度(_A)..." />
+                    <MenuItem Header="亮度对比度(_A)..." Command="{Binding ChangeBriAndCon}"/>
                     <MenuItem Header="颜色(_O)..." />
                     <MenuItem Header="_HMS..." />
                     <Separator />

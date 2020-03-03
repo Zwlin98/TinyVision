@@ -41,8 +41,9 @@ namespace TinyVision.ViewModels
             SaveAs = new DelegateCommand(SaveAsExecute).ObservesCanExecute(()=>CanEdit);
             CloseByMenu = new DelegateCommand<MainWindow>(CloseByMenuExecute);
             // 图像部分
+            ToGray = new DelegateCommand(ToGrayExecute).ObservesCanExecute(()=>CanEdit);
             Rotate = new DelegateCommand<string>(RotateExecute).ObservesCanExecute(() => CanEdit);
-
+            ChangeBriAndCon = new DelegateCommand(ChangeBriAndConExecute).ObservesCanExecute(()=>CanEdit);
             // 事件监听
             _eventAggregator.GetEvent<CanSaveImage>().Subscribe(RaiseCanSaveChanged);
             _eventAggregator.GetEvent<CanEditImage>().Subscribe(RaiseCanEditChanged);
@@ -172,6 +173,28 @@ namespace TinyVision.ViewModels
 
         //图像部分
 
+        // 模式
+
+        // 颜色位数
+
+        // 灰度化
+        public DelegateCommand ToGray { get; private set; }
+
+        public void ToGrayExecute()
+        {
+            GetCurrentTabViewModel().ToGray();
+        }
+        //对比度保留去色
+
+        // 调整
+        // 亮度对比度
+        public  DelegateCommand ChangeBriAndCon {get; private set; }
+
+        private void ChangeBriAndConExecute()
+        {
+            GetCurrentTabViewModel().ChangeBriAndCon();
+        }
+
         // 旋转
         public DelegateCommand<string> Rotate { get; private set; }
 
@@ -179,6 +202,7 @@ namespace TinyVision.ViewModels
         {
             GetCurrentTabViewModel().Rotate(angel);
         }
+
     }
 
 
