@@ -15,9 +15,6 @@
             <ColumnDefinition Width="20"/>
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal">
-            <CheckBox IsChecked="{Binding CanSave,Mode=TwoWay}">Modify</CheckBox>
-        </StackPanel>
         <Image Grid.Row="1" Grid.Column="1" Source="{Binding BitmapImageSource}" Stretch="None"></Image>
     </Grid>
 </UserControl>
