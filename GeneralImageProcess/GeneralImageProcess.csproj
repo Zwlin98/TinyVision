@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="System.Drawing.Common" Version="4.6.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Dlls">
+      <HintPath>D:\Documents\Tencent Files\1436631269\FileRecv\Dlls(1).dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
