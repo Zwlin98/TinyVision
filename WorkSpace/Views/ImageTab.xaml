@@ -16,7 +16,7 @@
             <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal">
-            <CheckBox IsChecked="{Binding CanSave,Mode=TwoWay}">Modify</CheckBox>
+            <Button Command="{Binding CloseTab}">关闭标签</Button>
         </StackPanel>
         <Image Grid.Row="1" Grid.Column="1" Source="{Binding BitmapImageSource}" Stretch="None"></Image>
     </Grid>

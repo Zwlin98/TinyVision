@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using AppEvents;
 using Microsoft.Win32;
 using OpenCvSharp;
+using Prism.Commands;
 using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -60,10 +62,19 @@ namespace WorkSpace.ViewModels
             _regionManager = regionManager;
             Id = _id++;
 
+            CloseTab = new DelegateCommand(CloseTabExecute);
+
             _eventAggregator.GetEvent<PreviewImageChange>().Subscribe(PreviewImage);
         }
 
+        // 关闭标签
+        public DelegateCommand CloseTab { get; private set; }
 
+        private void CloseTabExecute()
+        {
+            var first = _regionManager.Regions["ImageTabs"].ActiveViews.First();
+            _regionManager.Regions["ImageTabs"].Remove(first);
+        }
         //导航接口
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
