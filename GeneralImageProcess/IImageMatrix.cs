@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GeneralImageProcess
 {
-    interface IImageMatrix
+    public interface IImageMatrix
     {
         Bitmap ToBitmap();
     }

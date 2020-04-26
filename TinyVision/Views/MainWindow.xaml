@@ -8,7 +8,7 @@
         mc:Ignorable="d"
         mvvm:ViewModelLocator.AutoWireViewModel="True"
         x:Name="Mw"
-        Title="{Binding Title}" Width="1366" Height="768" MinHeight="480" MinWidth="640"
+        Title="{Binding Title}" Width="1366" Height="868" MinHeight="480" MinWidth="640"
         WindowStartupLocation="CenterScreen">
     <Grid x:Name="MainGrid">
         <Grid.RowDefinitions>
@@ -287,7 +287,7 @@
                     <MenuItem Header="垂直翻转(_V)" Command="{Binding Rotate}" CommandParameter="Vertical"/>
                 </MenuItem>
                 <Separator />
-                <MenuItem Header="裁剪(_C)" InputGestureText="Shift+C"  >
+                <MenuItem Header="裁剪(_C)" InputGestureText="Shift+C" Command="{Binding Crop}" >
                     <MenuItem.Icon>
                         <Image Source="../Icon/ImageScale.png" />
                     </MenuItem.Icon>
@@ -706,26 +706,28 @@
             <!-- 侧边栏 -->
             <TabControl Grid.Column="0" TabStripPlacement="Bottom" x:Name="tabControl">
                 <!-- 相机 -->
-                <TabItem>
+                <TabItem Width="75">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="../Icon/Camera.png" VerticalAlignment="Center" />
                             <TextBlock VerticalAlignment="Stretch">相机</TextBlock>
                         </StackPanel>
                     </TabItem.Header>
+                    <Image Source="../Pic/CameraInfo.png" Stretch="Fill"></Image>
+                    <!-- <ContentControl mvvm:RegionManager.RegionName="Camera" ></ContentControl> -->
                 </TabItem>
                 <!-- 文件夹 -->
-                <TabItem>
-                    <TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
-                            <Image Source="../Icon/FolderOpen.png" />
-                            <TextBlock>文件夹</TextBlock>
-                        </StackPanel>
-                    </TabItem.Header>
-                    <TreeView />
-                </TabItem>
+                <!-- <TabItem> -->
+                <!--     <TabItem.Header> -->
+                <!--         <StackPanel Orientation="Horizontal"> -->
+                <!--             <Image Source="../Icon/FolderOpen.png" /> -->
+                <!--             <TextBlock>文件夹</TextBlock> -->
+                <!--         </StackPanel> -->
+                <!--     </TabItem.Header> -->
+                <!--     <TreeView /> -->
+                <!-- </TabItem> -->
                 <!-- 撤销重做 -->
-                <TabItem>
+                <TabItem Width="85">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="../Icon/Camera.png" VerticalAlignment="Center" />
@@ -735,7 +737,7 @@
                     <ContentControl mvvm:RegionManager.RegionName="WorkHistory" ></ContentControl>
                 </TabItem>
                 <!-- 图层 -->
-                <TabItem>
+                <TabItem Width="75">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="../Icon/ImageStack.png" />
@@ -744,13 +746,14 @@
                     </TabItem.Header>
                 </TabItem>
                 <!-- 测量 -->
-                <TabItem>
+                <TabItem Width="75">
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <Image Source="../Icon/Ruler.png" />
                             <TextBlock>测量</TextBlock>
                         </StackPanel>
                     </TabItem.Header>
+                    <ContentControl mvvm:RegionManager.RegionName="Measure" ></ContentControl>
                 </TabItem>
             </TabControl>
             <!-- 工作区 -->

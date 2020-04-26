@@ -1,0 +1,18 @@
+﻿<UserControl x:Class="Sidebar.Views.Measure"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Sidebar.Views"
+             xmlns:mvvm="http://prismlibrary.com/"
+             mc:Ignorable="d" 
+
+             mvvm:ViewModelLocator.AutoWireViewModel="True">
+    <Grid >
+        <StackPanel Orientation="Vertical">
+            <Expander Header="外观" BorderBrush="Black"></Expander>
+            <Expander Header="计算" BorderBrush="Black"></Expander>
+            <Expander Header="坐标" BorderBrush="Black"></Expander>
+        </StackPanel>
+    </Grid>
+</UserControl>
