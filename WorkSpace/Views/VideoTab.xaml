@@ -6,9 +6,27 @@
              xmlns:local="clr-namespace:WorkSpace.Views"
              xmlns:mvvm="http://prismlibrary.com/"
              mc:Ignorable="d"
-             mvvm:ViewModelLocator.AutoWireViewModel="True"
-             d:DesignHeight="300" d:DesignWidth="300">
+             mvvm:ViewModelLocator.AutoWireViewModel="True">
     <Grid>
-        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="20"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.ColumnSpan="2" Orientation="Horizontal">
+            <Button Command="{Binding CloseTab}">关闭标签</Button>
+        </StackPanel>
+
+        <Canvas x:Name="CanvasPanel" Grid.Column="1" Grid.Row="1">
+            <Border Height="{Binding ElementName=CanvasPanel, Path=ActualHeight}" Width="{Binding ElementName=CanvasPanel, Path=ActualWidth}" Background="LightGray">
+                <ScrollViewer  VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Auto">
+                    <MediaElement Source="{Binding VideoSource}" Name="mePlayer" Stretch="None" />
+                </ScrollViewer>
+            </Border>
+        </Canvas>
+
     </Grid>
 </UserControl>

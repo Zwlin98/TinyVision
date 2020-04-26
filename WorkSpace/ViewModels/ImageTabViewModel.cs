@@ -1,9 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media.Imaging;
 using AppEvents;
+using CroppingImageLibrary;
 using Microsoft.Win32;
 using OpenCvSharp;
 using Prism.Commands;
@@ -101,6 +104,7 @@ namespace WorkSpace.ViewModels
         private void ShowMatInTab()
         {
             BitmapImageSource = Converter.MatToBitmapImage(ImageMat);
+            // BitmapImageSource = new BitmapImage(new Uri(ImageFilePath));
         }
 
         // 预览图片
@@ -234,6 +238,13 @@ namespace WorkSpace.ViewModels
             CanSave = true;
             ShowMatInTab();
         }
+
+        //裁剪
+        public void Crop()
+        {
+
+        }
+
     }
 
 }

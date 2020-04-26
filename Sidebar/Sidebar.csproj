@@ -93,7 +93,19 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="SidebarModule.cs" />
+    <Compile Include="ViewModels\CameraViewModel.cs" />
+    <Compile Include="ViewModels\FolderViewModel.cs" />
+    <Compile Include="ViewModels\MeasureViewModel.cs" />
     <Compile Include="ViewModels\WorkHistoryViewModel.cs" />
+    <Compile Include="Views\Camera.xaml.cs">
+      <DependentUpon>Camera.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Folder.xaml.cs">
+      <DependentUpon>Folder.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Measure.xaml.cs">
+      <DependentUpon>Measure.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\WorkHistory.xaml.cs">
       <DependentUpon>WorkHistory.xaml</DependentUpon>
     </Compile>
@@ -122,6 +134,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Views\Camera.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Folder.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Measure.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Views\WorkHistory.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

@@ -44,6 +44,7 @@ namespace TinyVision.ViewModels
             ToGray = new DelegateCommand(ToGrayExecute).ObservesCanExecute(()=>CanEdit);
             Rotate = new DelegateCommand<string>(RotateExecute).ObservesCanExecute(() => CanEdit);
             ChangeBriAndCon = new DelegateCommand(ChangeBriAndConExecute).ObservesCanExecute(()=>CanEdit);
+            Crop = new DelegateCommand(CropExecute).ObservesCanExecute(()=>CanEdit);
             // 事件监听
             _eventAggregator.GetEvent<CanSaveImage>().Subscribe(RaiseCanSaveChanged);
             _eventAggregator.GetEvent<CanEditImage>().Subscribe(RaiseCanEditChanged);
@@ -203,6 +204,13 @@ namespace TinyVision.ViewModels
             GetCurrentTabViewModel().Rotate(angel);
         }
 
+        // 裁剪
+        public   DelegateCommand Crop { get; private set; }
+
+        private void CropExecute()
+        {
+            GetCurrentTabViewModel().Crop();
+        }
     }
 
 

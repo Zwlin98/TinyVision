@@ -225,5 +225,8 @@
     <Resource Include="Icon\Word.png" />
     <Resource Include="Icon\ZoomToFit.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pic\CameraInfo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

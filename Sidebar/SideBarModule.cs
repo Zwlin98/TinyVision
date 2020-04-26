@@ -16,6 +16,8 @@ namespace Sidebar
         {
             var regionManager = containerProvider.Resolve<IRegionManager>();
             regionManager.RegisterViewWithRegion("WorkHistory", typeof(WorkHistory));
+            regionManager.RegisterViewWithRegion("Measure", typeof(Measure));
+            regionManager.RegisterViewWithRegion("Camera", typeof(Camera));
         }
     }
 }

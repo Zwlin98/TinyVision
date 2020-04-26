@@ -148,9 +148,17 @@
     <Page Include="Views\WorkSpace.xaml" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\UI-Cropping-Image\UI-Cropping-Image-Library\CroppingImageLibrary\CroppingImageLibrary.csproj">
+      <Project>{aada3516-ff2a-4c8d-ac3f-43c38acb7be4}</Project>
+      <Name>CroppingImageLibrary</Name>
+    </ProjectReference>
     <ProjectReference Include="..\AppEvents\AppEvents.csproj">
       <Project>{dcd9c6da-4fbb-4e55-b826-1d16ae611cc6}</Project>
       <Name>AppEvents</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GeneralImageProcess\GeneralImageProcess.csproj">
+      <Project>{e79e841b-840d-4f57-863c-6a39bbd80616}</Project>
+      <Name>GeneralImageProcess</Name>
     </ProjectReference>
     <ProjectReference Include="..\Utils\Utils.csproj">
       <Project>{3540c678-7701-4b09-8ed1-73e3504bad81}</Project>
